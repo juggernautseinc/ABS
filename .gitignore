@@ -13,3 +13,6 @@ ccdaservice/node_modules
 
 # testing
 .phpunit.result.cache
+
+
+sites/default/documents/*
