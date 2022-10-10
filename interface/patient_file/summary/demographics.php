@@ -1176,8 +1176,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         ];
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
                     endif; //end if prw is activated
-$show = 0;
-                    if (AclMain::aclCheckCore('patients', 'disclosure') && $show = 1) :
+                    $show = 0;
+                    if (AclMain::aclCheckCore('patients', 'disclosure') && $show == 1) :
                         $authWriteDisclosure = AclMain::aclCheckCore('patients', 'disclosure', '', 'write');
                         $authAddonlyDisclosure = AclMain::aclCheckCore('patients', 'disclosure', '', 'addonly');
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('disclosure'));
@@ -1198,7 +1198,7 @@ $show = 0;
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
                     endif; // end if disclosures authorized
 
-                    if ($GLOBALS['amendments'] && AclMain::aclCheckCore('patients', 'amendment') && $show = 1) :
+                    if ($GLOBALS['amendments'] && AclMain::aclCheckCore('patients', 'amendment')) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('amendment'));
                         // Amendments widget
                         $sql = "SELECT * FROM amendments WHERE pid = ? ORDER BY amendment_date DESC";
@@ -1226,7 +1226,7 @@ $show = 0;
                         echo $twig->getTwig()->render('patient/card/amendments.html.twig', $viewArgs);
                     endif; // end amendments authorized
 
-                    if (AclMain::aclCheckCore('patients', 'lab') && $show = 1) :
+                    if (AclMain::aclCheckCore('patients', 'lab') && $show == 1) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('lab'));
                         // labdata expand collapse widget
                         // check to see if any labdata exist
