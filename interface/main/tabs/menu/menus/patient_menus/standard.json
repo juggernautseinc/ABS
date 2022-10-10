@@ -53,7 +53,7 @@
         "requirement": 0
     },
     {
-        "label": "Issues",
+        "label": "Diagnoses",
         "menu_id": "issues",
         "target": "main",
         "on_click":"top.restoreSession()",
