@@ -550,8 +550,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         });
                 });
             });
-            placeHtml("disc_fragment.php", "disclosures_ps_expand");
-            placeHtml("labdata_fragment.php", "labdata_ps_expand");
+            //placeHtml("disc_fragment.php", "disclosures_ps_expand");
+            //placeHtml("labdata_fragment.php", "labdata_ps_expand");
             placeHtml("track_anything_fragment.php", "track_anything_ps_expand");
             <?php if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) { ?>
                 // Initialize the Vitals form if it is registered and user is authorized.
