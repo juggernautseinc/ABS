@@ -550,8 +550,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         });
                 });
             });
-            //placeHtml("disc_fragment.php", "disclosures_ps_expand");
-            //placeHtml("labdata_fragment.php", "labdata_ps_expand");
+            placeHtml("disc_fragment.php", "disclosures_ps_expand");
+            placeHtml("labdata_fragment.php", "labdata_ps_expand");
             placeHtml("track_anything_fragment.php", "track_anything_ps_expand");
             <?php if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) { ?>
                 // Initialize the Vitals form if it is registered and user is authorized.
@@ -1176,8 +1176,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         ];
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
                     endif; //end if prw is activated
-
-                    if (AclMain::aclCheckCore('patients', 'disclosure')) :
+$show = 0;
+                    if (AclMain::aclCheckCore('patients', 'disclosure') && $show = 1) :
                         $authWriteDisclosure = AclMain::aclCheckCore('patients', 'disclosure', '', 'write');
                         $authAddonlyDisclosure = AclMain::aclCheckCore('patients', 'disclosure', '', 'addonly');
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('disclosure'));
@@ -1198,7 +1198,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
                     endif; // end if disclosures authorized
 
-                    if ($GLOBALS['amendments'] && AclMain::aclCheckCore('patients', 'amendment')) :
+                    if ($GLOBALS['amendments'] && AclMain::aclCheckCore('patients', 'amendment') && $show = 1) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('amendment'));
                         // Amendments widget
                         $sql = "SELECT * FROM amendments WHERE pid = ? ORDER BY amendment_date DESC";
@@ -1226,7 +1226,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         echo $twig->getTwig()->render('patient/card/amendments.html.twig', $viewArgs);
                     endif; // end amendments authorized
 
-                    if (AclMain::aclCheckCore('patients', 'lab')) :
+                    if (AclMain::aclCheckCore('patients', 'lab') && $show = 1) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('lab'));
                         // labdata expand collapse widget
                         // check to see if any labdata exist
