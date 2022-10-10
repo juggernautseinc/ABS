@@ -43,7 +43,7 @@
         "requirement": 0
     },
     {
-        "label": "Transactions",
+        "label": "Referrals",
         "menu_id": "transactions",
         "target": "main",
         "on_click":"top.restoreSession()",
