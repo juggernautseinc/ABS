@@ -961,9 +961,9 @@ function getCodeText($code)
                         if ($GLOBALS['ippf_specific']) {
                             echo " style='display:none;'";
                         } ?>>
-                            <label class="col-form-label" for="form_outcome"><?php echo xlt('Outcome'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_outcome"><?php //echo xlt('Outcome'); ?>:</label>-->
                             <?php
-                            echo generate_select_list('form_outcome', 'outcome', ($irow['outcome'] ?? null), '', '', '', 'outcomeClicked(this);');
+                            //echo generate_select_list('form_outcome', 'outcome', ($irow['outcome'] ?? null), '', '', '', 'outcomeClicked(this);');
                             ?>
                         </div>
                         <div class="form-group col-12" <?php
