@@ -829,8 +829,8 @@ function getCodeText($code)
                         </div>
                         <div class="form-group col-12" id='row_titles'>
                             <label for="form_titles" class="col-form-label"> </label>
-                            <!--<select name='form_titles' id='form_titles' class="form-control" multiple size='4' onchange='set_text()'></select>-->
-                            <!--<p><?php //echo xlt('(Select one of these, or type your own title)'); ?></p>-->
+                            <select name='form_titles' id='form_titles' class="form-control" multiple size='4' onchange='set_text()'></select>
+                            <p><?php echo xlt('(Select one of these, or type your own title)'); ?></p>
                         </div>
                         <?php if ($thistype == 'medical_device' || (!empty($irow['type']) && $irow['type'] == 'medical_device')) { ?>
                             <div class="form-group col-12">
