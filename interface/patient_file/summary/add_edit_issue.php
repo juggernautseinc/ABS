@@ -942,20 +942,20 @@ function getCodeText($code)
                         <!-- End of reaction -->
                         <!-- Verification Status for Medication Allergy -->
                         <div class="form-group col-12" id='row_verification'>
-                            <label class="col-form-label" for="form_verification"><?php echo xlt('Verification Status'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_verification"><?php echo xlt('Verification Status'); ?>:</label>-->
                             <?php
-                            $codeListName = ($thistype == 'medical_problem') ? 'condition-verification' : 'allergyintolerance-verification';
-                            echo generate_select_list('form_verification', $codeListName, ($irow['verification'] ?? null), '', '', '', '');
+                            //$codeListName = ($thistype == 'medical_problem') ? 'condition-verification' : 'allergyintolerance-verification';
+                            //echo generate_select_list('form_verification', $codeListName, ($irow['verification'] ?? null), '', '', '', '');
                             ?>
                         </div>
                         <!-- End of Verification Status -->
                         <div class="form-group col-12" id='row_referredby'>
-                            <label class="col-form-label" for="form_referredby"><?php echo xlt('Referred by'); ?>:</label>
-                            <input type='text' name='form_referredby' id='form_referredby' class='form-control' value='<?php echo attr($irow['referredby'] ?? '') ?>' title='<?php echo xla('Referring physician and practice'); ?>' />
+                            <!--<label class="col-form-label" for="form_referredby"><?php echo xlt('Referred by'); ?>:</label>
+                            <input type='text' name='form_referredby' id='form_referredby' class='form-control' value='<?php //echo attr($irow['referredby'] ?? '') ?>' title='<?php echo xla('Referring physician and practice'); ?>' />-->
                         </div>
                         <div class="form-group col-12" id='row_comments'>
-                            <label class="col-form-label" for="form_comments"><?php echo xlt('Comments'); ?>:</label>
-                            <textarea class="form-control" name='form_comments' id='form_comments' rows="4" id='form_comments'><?php echo text($irow['comments'] ?? '') ?></textarea>
+                            <!--<label class="col-form-label" for="form_comments"><?php //echo xlt('Comments'); ?>:</label>
+                            <textarea class="form-control" name='form_comments' id='form_comments' rows="4" id='form_comments'><?php //echo text($irow['comments'] ?? '') ?></textarea>-->
                         </div>
                         <div class="form-group col-12" <?php
                         if ($GLOBALS['ippf_specific']) {
