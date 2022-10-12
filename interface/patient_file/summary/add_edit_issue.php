@@ -828,9 +828,9 @@ function getCodeText($code)
                             ?>
                         </div>
                         <div class="form-group col-12" id='row_titles'>
-                            <label for="form_titles" class="col-form-label"> </label>
-                            <select name='form_titles' id='form_titles' class="form-control" multiple size='4' onchange='set_text()'></select>
-                            <p><?php echo xlt('(Select one of these, or type your own title)'); ?></p>
+                            <!--<label for="form_titles" class="col-form-label"> </label>
+                            <select name='form_titles' id='form_titles' class="form-control" multiple size='4' onchange='set_text()'></select>-->
+                            <p><?php //echo xlt('(Select one of these, or type your own title)'); ?></p>
                         </div>
                         <?php if ($thistype == 'medical_device' || (!empty($irow['type']) && $irow['type'] == 'medical_device')) { ?>
                             <div class="form-group col-12">
@@ -883,9 +883,9 @@ function getCodeText($code)
                             <input type='text' class='datepicker form-control' name='form_begin' id='form_begin' value='<?php echo attr(trim(oeFormatDateTime($irow['begdate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of onset, surgery or start of medication'); ?>' />
                         </div>
                         <div class="form-group col-12" id='row_enddate'>
-                            <label class="col-form-label" for="form_begin"><?php echo xlt('End Date and Time'); ?>:</label>
-                            <input type='text' class='datepicker form-control' name='form_end' id='form_end' value='<?php echo attr(trim(oeFormatDateTime($irow['enddate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of recovery or end of medication'); ?>' />
-                            &nbsp;(<?php echo xlt('leave blank if still active'); ?>)
+                            <!--<label class="col-form-label" for="form_begin"><?php echo xlt('End Date and Time'); ?>:</label>
+                            <input type='text' class='datepicker form-control' name='form_end' id='form_end' value='<?php echo attr(trim(oeFormatDateTime($irow['enddate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of recovery or end of medication'); ?>' />-->
+                            &nbsp;(<?php //echo xlt('leave blank if still active'); ?>)
                         </div>
                         <div class="form-group col-12" id='row_active'>
                             <label class="col-form-label" for="form_active"><?php echo xlt('Active{{Issue}}'); ?>: </label>
