@@ -885,7 +885,7 @@ function getCodeText($code)
                         <div class="form-group col-12" id='row_enddate'>
                             <!--<label class="col-form-label" for="form_begin"><?php echo xlt('End Date and Time'); ?>:</label>
                             <input type='text' class='datepicker form-control' name='form_end' id='form_end' value='<?php echo attr(trim(oeFormatDateTime($irow['enddate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of recovery or end of medication'); ?>' />-->
-                            &nbsp;(<?php //echo xlt('leave blank if still active'); ?>)
+                            &nbsp;<!--(<?php //echo xlt('leave blank if still active'); ?>)-->
                         </div>
                         <div class="form-group col-12" id='row_active'>
                             <label class="col-form-label" for="form_active"><?php echo xlt('Active{{Issue}}'); ?>: </label>
@@ -893,7 +893,7 @@ function getCodeText($code)
                                 <label><input type='checkbox' name='form_active' id=='form_active' value='1' <?php echo (!empty($irow['enddate'])) ? "" : "checked"; ?> onclick='activeClicked(this);' title='<?php echo xla('Indicates if this issue is currently active'); ?>'></label>
                             </div>
                         </div>
-                        <div class="form-group" id='row_returndate'>
+                        <!--<div class="form-group" id='row_returndate'>
                             <input type='hidden' name='form_return' id='form_return' />
                             <input type='hidden' name='row_reinjury_id' id='row_reinjury_id' />
                             <img id='img_return' />
@@ -926,7 +926,7 @@ function getCodeText($code)
                             </select>
                         </div>
                         <!-- Reaction For Medication Allergy -->
-                        <div class="form-group col-12" id='row_severity'>
+                        <!--<div class="form-group col-12" id='row_severity'>
                             <label class="col-form-label" for="form_severity_id"><?php echo xlt('Severity'); ?>:</label>
                             <?php
                             $severity = $irow['severity_al'] ?? null;
@@ -941,7 +941,7 @@ function getCodeText($code)
                         </div>
                         <!-- End of reaction -->
                         <!-- Verification Status for Medication Allergy -->
-                        <div class="form-group col-12" id='row_verification'>
+                        <!--<div class="form-group col-12" id='row_verification'>
                             <label class="col-form-label" for="form_verification"><?php echo xlt('Verification Status'); ?>:</label>
                             <?php
                             $codeListName = ($thistype == 'medical_problem') ? 'condition-verification' : 'allergyintolerance-verification';
@@ -949,7 +949,7 @@ function getCodeText($code)
                             ?>
                         </div>
                         <!-- End of Verification Status -->
-                        <div class="form-group col-12" id='row_referredby'>
+                        <!--<div class="form-group col-12" id='row_referredby'>
                             <label class="col-form-label" for="form_referredby"><?php echo xlt('Referred by'); ?>:</label>
                             <input type='text' name='form_referredby' id='form_referredby' class='form-control' value='<?php echo attr($irow['referredby'] ?? '') ?>' title='<?php echo xla('Referring physician and practice'); ?>' />
                         </div>
@@ -980,7 +980,7 @@ function getCodeText($code)
                                 <?php echo rbinput('form_destination', '3', 'GP via physio', 'destination') ?>&nbsp;
                                 <?php echo rbinput('form_destination', '4', 'GP via podiatry', 'destination') ?>
                             <?php } ?>
-                        </div>
+                        </div>-->
 
                         <?php if (($irow['type'] ?? '') == 'medication') : ?>
                             <!-- any medication specific issue information goes here -->
