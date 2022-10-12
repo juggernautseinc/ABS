@@ -905,38 +905,38 @@ function getCodeText($code)
                             ?>
                         </div>
                         <div class="form-group col-12" id='row_occurrence'>
-                            <label class="col-form-label" for="form_occur"><?php echo xlt('Occurrence'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_occur"><?php echo xlt('Occurrence'); ?>:</label>-->
                             <?php
                             // Modified 6/2009 by BM to incorporate the occurrence items into the list_options listings
-                            generate_form_field(array('data_type' => 1, 'field_id' => 'occur', 'list_id' => 'occurrence', 'empty_title' => 'SKIP'), ($irow['occurrence'] ?? null));
+                            //generate_form_field(array('data_type' => 1, 'field_id' => 'occur', 'list_id' => 'occurrence', 'empty_title' => 'SKIP'), ($irow['occurrence'] ?? null));
                             ?>
                         </div>
                         <div class="form-group col-12" id='row_classification'>
-                            <label class="col-form-label" for="form_classification"><?php echo xlt('Classification'); ?>:</label>
-                            <select name='form_classification' id='form_classification' class='form-control'>
+                            <!--<label class="col-form-label" for="form_classification"><?php //echo xlt('Classification'); ?>:</label>-->
+                            <!--<select name='form_classification' id='form_classification' class='form-control'>
                                 <?php
-                                foreach ($ISSUE_CLASSIFICATIONS as $key => $value) {
+                               /* foreach ($ISSUE_CLASSIFICATIONS as $key => $value) {
                                     echo "   <option value='" . attr($key) . "'";
                                     if (!empty($irow['classification']) && ($key == $irow['classification'])) {
                                         echo " selected";
                                     }
                                     echo ">" . text($value) . "\n";
-                                }
+                                }*/
                                 ?>
-                            </select>
+                            </select>-->
                         </div>
                         <!-- Reaction For Medication Allergy -->
                         <div class="form-group col-12" id='row_severity'>
-                            <label class="col-form-label" for="form_severity_id"><?php echo xlt('Severity'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_severity_id"><?php //echo xlt('Severity'); ?>:</label>-->
                             <?php
                             $severity = $irow['severity_al'] ?? null;
-                            generate_form_field(array('data_type' => 1, 'field_id' => 'severity_id', 'list_id' => 'severity_ccda', 'empty_title' => 'SKIP'), $severity);
+                            //generate_form_field(array('data_type' => 1, 'field_id' => 'severity_id', 'list_id' => 'severity_ccda', 'empty_title' => 'SKIP'), $severity);
                             ?>
                         </div>
                         <div class="form-group col-12" id='row_reaction'>
-                            <label class="col-form-label" for="form_reaction"><?php echo xlt('Reaction'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_reaction"><?php echo xlt('Reaction'); ?>:</label>-->
                             <?php
-                            echo generate_select_list('form_reaction', 'reaction', ($irow['reaction'] ?? null), '', '', '', '');
+                            //echo generate_select_list('form_reaction', 'reaction', ($irow['reaction'] ?? null), '', '', '', '');
                             ?>
                         </div>
                         <!-- End of reaction -->
