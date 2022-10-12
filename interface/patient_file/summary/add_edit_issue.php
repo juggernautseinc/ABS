@@ -883,9 +883,9 @@ function getCodeText($code)
                             <input type='text' class='datepicker form-control' name='form_begin' id='form_begin' value='<?php echo attr(trim(oeFormatDateTime($irow['begdate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of onset, surgery or start of medication'); ?>' />
                         </div>
                         <div class="form-group col-12" id='row_enddate'>
-                            <label class="col-form-label" for="form_begin"><?php echo xlt('End Date and Time'); ?>:</label>
-                            <input type='text' class='datepicker form-control' name='form_end' id='form_end' value='<?php echo attr(trim(oeFormatDateTime($irow['enddate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of recovery or end of medication'); ?>' />
-                            &nbsp;(<?php echo xlt('leave blank if still active'); ?>)
+                            <!--<label class="col-form-label" for="form_begin"><?php echo xlt('End Date and Time'); ?>:</label>-->
+                            <!--<input type='text' class='datepicker form-control' name='form_end' id='form_end' value='<?php echo attr(trim(oeFormatDateTime($irow['enddate'] ?? ''))) ?>' title='<?php echo xla('yyyy-mm-dd HH:MM date of recovery or end of medication'); ?>' />-->
+                            &nbsp;<!--(<?php //echo xlt('leave blank if still active'); ?>)-->
                         </div>
                         <div class="form-group col-12" id='row_active'>
                             <label class="col-form-label" for="form_active"><?php echo xlt('Active{{Issue}}'); ?>: </label>
@@ -899,9 +899,9 @@ function getCodeText($code)
                             <img id='img_return' />
                         </div>
                         <div class="form-group col-12" id='row_subtype'>
-                            <label class="col-form-label" for="form_subtype"><?php echo xlt('Classification Type'); ?>:</label>
+                            <!--<label class="col-form-label" for="form_subtype"><?php //echo xlt('Classification Type'); ?>:</label>-->
                             <?php
-                            echo generate_select_list('form_subtype', 'issue_subtypes', ($irow['subtype'] ?? null), '', 'NA', '', '');
+                            //echo generate_select_list('form_subtype', 'issue_subtypes', ($irow['subtype'] ?? null), '', 'NA', '', '');
                             ?>
                         </div>
                         <div class="form-group col-12" id='row_occurrence'>
