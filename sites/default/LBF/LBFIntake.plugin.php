@@ -16,7 +16,7 @@ function LBFIntake_javascript_onload()
        
        document.getElementById('form_homeless_intake').addEventListener('onchange', displayLiving);
        function displayLiving() {
-           l = document.getElementById('form_apartment_no_intake').value;
+           l = document.getElementById('form_homeless_intake').value;
            if (l == 'Apartment') {
               living.style.display = 'block';
            }
