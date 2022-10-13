@@ -52,18 +52,6 @@ function LBFIntake_javascript_onload()
               treatment.style.display = 'none';
               shelter.style.display = 'block';
            }
-           if (l != 'shelter' ||
-           l != 'rtp' ||
-           l != 'halfway house' ||
-           l != 'quarter house' ||
-           l != 'apartment'
-           ) {
-              living.style.display = 'none';
-              threequater.style.display = 'none';
-              halfway.style.display = 'none';
-              treatment.style.display = 'none';
-              shelter.style.display = 'none';
-           }
        }
     ";
 }
