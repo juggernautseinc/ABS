@@ -19,10 +19,19 @@ function LBFIntake_javascript_onload()
            l = document.getElementById('form_homeless_intake').value;
            if (l == 'apartment') {
               living.style.display = 'block';
-           } 
+           }
            if (l == 'quarter house') {
               threequater.style.display = 'block';
-           } 
+           }
+           if (l == 'halfway house') {
+              halfway.style.display = 'block';
+           }
+           if (l == 'rtp') {
+              treatment.style.display = 'block';
+           }
+           if (l == 'shelter') {
+              shelter.style.display = 'block';
+           }
        }
     ";
 }
