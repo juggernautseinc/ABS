@@ -19,9 +19,7 @@ function LBFIntake_javascript_onload()
            l = document.getElementById('form_homeless_intake').value;
            if (l == 'apartment') {
               living.style.display = 'block';
-           } elseif (l == 'quarter house') {
-              halfway.style.display = 'block';
-           }
+           } 
        }
     ";
 }
