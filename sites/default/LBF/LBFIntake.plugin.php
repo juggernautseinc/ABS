@@ -18,6 +18,7 @@ function LBFIntake_javascript_onload()
        function displayLiving() {
            l = document.getElementById('form_homeless_intake').value;
            if (l == 'Apartment') {
+              alert(l);
               living.style.display = 'block';
            }
        }
