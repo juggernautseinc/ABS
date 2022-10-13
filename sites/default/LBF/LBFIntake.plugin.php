@@ -14,7 +14,7 @@ function LBFIntake_javascript_onload()
        const shelter = document.getElementById('form_Name_of_Shelter');
        shelter.style.display = 'none';
        
-       document.getElementById('form_homeless_intake').addEventListener('onchange', displayLiving);
+       document.getElementById('form_homeless_intake').addEventListener('change', displayLiving);
        function displayLiving() {
        alert('fired');
            l = document.getElementById('form_homeless_intake').value;
