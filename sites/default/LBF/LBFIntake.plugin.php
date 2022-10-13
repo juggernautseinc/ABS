@@ -19,17 +19,37 @@ function LBFIntake_javascript_onload()
            l = document.getElementById('form_homeless_intake').value;
            if (l == 'apartment') {
               living.style.display = 'block';
+              threequater.style.display = 'none';
+              halfway.style.display = 'none';
+              treatment.style.display = 'none';
+              shelter.style.display = 'none';
            }
            if (l == 'quarter house') {
+              living.style.display = 'none';
               threequater.style.display = 'block';
+              halfway.style.display = 'none';
+              treatment.style.display = 'none';
+              shelter.style.display = 'none';
            }
            if (l == 'halfway house') {
+              living.style.display = 'none';
+              threequater.style.display = 'none';
               halfway.style.display = 'block';
+              treatment.style.display = 'none';
+              shelter.style.display = 'none';
            }
            if (l == 'rtp') {
+              living.style.display = 'none';
+              threequater.style.display = 'none';
+              halfway.style.display = 'none';
               treatment.style.display = 'block';
+              shelter.style.display = 'none';
            }
            if (l == 'shelter') {
+              living.style.display = 'none';
+              threequater.style.display = 'none';
+              halfway.style.display = 'none';
+              treatment.style.display = 'none';
               shelter.style.display = 'block';
            }
        }
