@@ -14,7 +14,7 @@ function LBFIntake_javascript_onload()
        const shelter = document.getElementById('form_Name_of_Shelter');
        shelter.style.display = 'none';
        
-       document.getElementById().addEventListener('onchange', displayLiving);
+       document.getElementById('form_apartment_no_intake').addEventListener('onchange', displayLiving);
        function displayLiving() {
            l = document.getElementById('form_apartment_no_intake').value;
            if (l == 'Apartment') {
