@@ -16,11 +16,11 @@ function LBFIntake_javascript_onload()
        
        document.getElementById('form_homeless_intake').addEventListener('change', displayLiving);
        function displayLiving() {
-       alert('fired');
            l = document.getElementById('form_homeless_intake').value;
            if (l == 'apartment') {
-              alert(l);
               living.style.display = 'block';
+           } elseif (l == 'quarter house') {
+              halfway.style.display = 'block';
            }
        }
     ";
