@@ -20,6 +20,9 @@ function LBFIntake_javascript_onload()
            if (l == 'apartment') {
               living.style.display = 'block';
            } 
+           if (l == 'quarter house') {
+              threequater.style.display = 'block';
+           } 
        }
     ";
 }
