@@ -52,6 +52,13 @@ function LBFIntake_javascript_onload()
               treatment.style.display = 'none';
               shelter.style.display = 'block';
            }
+           if (l == '') {
+              living.style.display = 'none';
+              threequater.style.display = 'none';
+              halfway.style.display = 'none';
+              treatment.style.display = 'none';
+              shelter.style.display = 'none';
+           }
        }
     ";
 }
