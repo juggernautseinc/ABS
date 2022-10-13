@@ -13,5 +13,13 @@ function LBFIntake_javascript_onload()
        treatment.style.display = 'none';
        const shelter = document.getElementById('form_Name_of_Shelter');
        shelter.style.display = 'none';
+       
+       document.getElementById().addEventListener('onchange', displayLiving);
+       function displayLiving() {
+           l = document.getElementById('form_apartment_no_intake').value;
+           if (l == 'Apartment') {
+              living.style.display = 'block';
+           }
+       }
     ";
 }
