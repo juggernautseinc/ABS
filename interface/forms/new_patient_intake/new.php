@@ -1205,7 +1205,7 @@ JotForm.paymentExtrasOnTheFly([null,{"name":"clientInformation","qid":"1","text"
 </script>
 </head>
 <body>
-<form class="jotform-form" action="save.php" method="post" name="form_210757815827161" id="210757815827161" accept-charset="utf-8" autocomplete="off">
+<form class="jotform-form" action="../interface/forms/new_patient_intake/save.php" method="post" name="form_210757815827161" id="210757815827161" accept-charset="utf-8" autocomplete="off">
   <input type="hidden" name="formID" value="210757815827161" />
   <input type="hidden" id="JWTContainer" value="" />
   <input type="hidden" id="cardinalOrderNumber" value="" />
