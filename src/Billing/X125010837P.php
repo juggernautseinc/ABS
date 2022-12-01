@@ -626,7 +626,7 @@ class X125010837P
         "*" .
         "*" . sprintf('%02d', $claim->facilityPOS()) . ":" . "B" . ":" . $claim->frequencyTypeCode() .
         "*" . "Y" .
-        "*" . "A" .
+        "*" . ($claim->billingFacilityAssignment() ? 'A' : 'C') .
         "*" . ($claim->billingFacilityAssignment() ? 'Y' : 'N') .
         "*" . "Y" .
         "~\n";
@@ -2158,7 +2158,7 @@ class X125010837P
             "*" .
             "*" . sprintf('%02d', $claim->facilityPOS()) . ":" . "B" . ":" . $claim->frequencyTypeCode() .
             "*" . "Y" .
-            "*" . "A" .
+            "*" . ($claim->billingFacilityAssignment() ? 'A' : 'C') .
             "*" . ($claim->billingFacilityAssignment() ? 'Y' : 'N') .
             "*" . "Y" .
             "~\n";
@@ -2272,7 +2272,7 @@ class X125010837P
         }
 
         // Segment REF*F8 Payer Claim Control Number for claim re-submission.icn_resubmission_number
-        if (strlen(trim($claim->billing_options['icn_resubmission_number'] ?? null)) > 3) {
+        if (strlen(trim($claim->billing_options['icn_resubmission_number'] ?? '')) > 3) {
             ++$edicount;
             error_log("Method 1: " . errorLogEscape($claim->billing_options['icn_resubmission_number']), 0);
             $out .= "REF" .

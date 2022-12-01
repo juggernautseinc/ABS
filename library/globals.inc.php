@@ -445,6 +445,13 @@ $GLOBALS_METADATA = array(
             xl('Special treatment for the Vitals form')
         ),
 
+        'gbl_vitals_max_history_cols' => array(
+            xl('Vitals Form Max Historical Columns To Display'),
+            'num',
+            '2',                              // default
+            xl('The number of historical vital columns to display on medium to large screen displays')
+        ),
+
         'gb_how_sort_list' => array(
             xl('How to sort a drop-lists'),
             array(
@@ -965,10 +972,10 @@ $GLOBALS_METADATA = array(
         ),
 
         'drive_encryption' => array(
-            xl('Enable Encryption of Items Stored on Drive'),
+            xl('Enable Encryption of Items Stored on Drive (Strongly recommend keeping this on)'),
             'bool',                           // data type
             '1',                              // default = true
-            xl('This will enable encryption of items that are stored on the drive.')
+            xl('This will enable encryption of items that are stored on the drive. Strongly recommend keeping this setting on for security purposes.')
         ),
 
         'couchdb_encryption' => array(
@@ -3134,6 +3141,16 @@ $GLOBALS_METADATA = array(
             '0',
             xl('Enable OAuth2 Password Grant. Recommend turning this setting off for production server. Recommend only using for testing.')
         ),
+        'oauth_app_manual_approval' => array(
+            xl('OAuth2 App Manual Approval Settings'),
+            array(
+                0 => xl('Patient standalone apps Auto Approved, EHR-Launch,Provider&System Apps require manual approval')
+                ,1 => xl('Manually Approve All Apps (USA jurisdictions must approve all patient standalone apps within 48 hours)')
+//                ,2 => xl('All apps Auto Approved') we could add this setting at a latter date
+            ),
+            '0',
+            xl('Approval settings for 3rd party app/api access')
+        ),
 
         'cc_front_payments' => array(
             xl('Accept Credit Card transactions from Front Payments'),
@@ -3528,6 +3545,13 @@ $GLOBALS_METADATA = array(
             'text',                           // data type
             '',
             xl('USPS Web Tools API Username')
+        ),
+
+        'ccda_validation_disable' => array(
+            xl('Disable All import CDA Validation Reporting'),
+            'bool',                           // data type
+            '0',
+            xl('Disable All CDA conformance and validation services to improve import performance')
         ),
 
         'mdht_conformance_server_enable' => array(

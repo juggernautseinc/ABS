@@ -45,6 +45,13 @@ switch ($search_any_type) {
 }
 
 ?>
+<style>
+.messagesColumn
+{
+    float: left;
+    padding-left: 20px;
+}
+</style>
 <script type="text/html" id="patient-data-template">
     <div class="d-lg-inline-flex w-100">
         <div class="flex-fill">
@@ -168,7 +175,7 @@ switch ($search_any_type) {
             <!-- /ko --><!-- patient -->
         </div>
 
-        <div class="flex-column mx-2">
+        <div class="messagesColumn flex-column mx-2">
             <!-- ko if: user -->
             <!-- ko with: user -->
             <!-- ko if:messages() -->
@@ -218,6 +225,15 @@ switch ($search_any_type) {
                         </a>
                     </li>
                 </ul>
+            </span>
+            <span class="messagesColumn">
+        <a class="btn btn-xs btn-link" onclick="loadTeleHealth()" href="#" title="<?php echo xla("Tele Health");?>" style="width: 30px;
+            height: 30px;
+            padding: 4px 0;
+            border-radius: 17px!important;
+            margin: -4px;">
+        <i class="fa fa-video-camera"></i>
+        </a>
             </span>
             <!-- /ko --><!-- portal alert -->
             <!-- /ko --><!-- with user -->

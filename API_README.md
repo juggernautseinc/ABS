@@ -30,6 +30,7 @@
         - [Overview Docref (in FHIR_README.md)](FHIR_README.md#overview-docref)
         - [Generate CCDA (in FHIR_README.md)](FHIR_README.md#generate-ccda)
         - [Details Docref (in FHIR_README.md)](FHIR_README.md#details-docref)
+- [Security Settings](API_README.md#security)
 - [For Developers](API_README.md#for-developers)
 
 ## Overview
@@ -65,13 +66,14 @@ This is a listing of scopes:
 - `launch/patient`
 - `api:fhir` (fhir which are the /fhir/ endpoints)
   - `patient/AllergyIntolerance.read`
+  - `patient/Appointment.read`
+  - `patient/Binary.read`
   - `patient/CarePlan.read`
   - `patient/CareTeam.read`
   - `patient/Condition.read`
   - `patient/Coverage.read`
   - `patient/Device.read`
   - `patient/DiagnosticReport.read`
-  - `patient/Document.read`
   - `patient/DocumentReference.read`
   - `patient/DocumentReference.$docref`
   - `patient/Encounter.read`
@@ -88,13 +90,13 @@ This is a listing of scopes:
   - `patient/Procedure.read`
   - `patient/Provenance.read`
   - `system/AllergyIntolerance.read`
+  - `system/Binary.read`
   - `system/CarePlan.read`
   - `system/CareTeam.read`
   - `system/Condition.read`
   - `system/Coverage.read`
   - `system/Device.read`
   - `system/DiagnosticReport.read`
-  - `system/Document.read`
   - `system/DocumentReference.read`
   - `system/DocumentReference.$docref`
   - `system/Encounter.read`
@@ -117,13 +119,13 @@ This is a listing of scopes:
   - `system/*.$bulkdata-status`
   - `system/*.$export`
   - `user/AllergyIntolerance.read`
+  - `user/Binary.read`
   - `user/CarePlan.read`
   - `user/CareTeam.read`
   - `user/Condition.read`
   - `user/Coverage.read`
   - `user/Device.read`
   - `user/DiagnosticReport.read`
-  - `user/Document.read`
   - `user/DocumentReference.read`
   - `user/DocumentReference.$docref`
   - `user/Encounter.read`
@@ -396,6 +398,12 @@ Request:
 curl -X GET 'https://localhost:9300/apis/default/portal/patient' \
   -H 'Authorization: Bearer eyJ0b2tlbiI6IjAwNmZ4TWpsNWhsZmNPelZicXBEdEZVUlNPQUY5KzdzR1Jjejc4WGZyeGFjUjY2QlhaaEs4eThkU3cxbTd5VXFBeTVyeEZpck9mVzBQNWc5dUlidERLZ0trUElCME5wRDVtTVk5bE9WaE5DTHF5RnRnT0Q0OHVuaHRvbXZ6OTEyNmZGUmVPUllSYVJORGoyZTkzTDA5OWZSb0ZRVGViTUtWUFd4ZW5cL1piSzhIWFpJZUxsV3VNcUdjQXR5dmlLQXRXNDAiLCJzaXRlX2lkIjoiZGVmYXVsdCIsImFwaSI6Im9lbXIifQ=='
 ```
+
+## Security
+- OpenEMR adminstrators / installers should ensure that the API is protected using an end to end encryption protocol such as TLS
+- Password Grant SHOULD be turned off for any kind of production use as it has a number of security problems
+- Setting the Admin -> Globals -> OAuth2 App Manual Approval Settings to be 'Manual Approval' prevents any OAuth2 application from accessing the API without manual approval from an administrator.  This is the most secure setting.  However, in the USA jurisdiction that must comply with CEHRT rules for ONC 2015 Cures Update, patient standalone apps must be approved within 48 hours of a patient requesting access in order to avoid pentalities under the Information Blocking Provisions from ONC.  EHR administrators are not allowed to vet a patient's choice of an app as long as the app complies with OpenEMR's OAuth2 security requirements.  If an app requests user/* or system/* scopes, administrators can vet an application and request additional information / security on an app by app basis.  Leaving the setting at the default will auto-approve any patient standalone app.
+- Public apps (ones that can't securely store a secret) MUST implement the PKCE standard specified in [RFC 7636](https://www.rfc-editor.org/rfc/rfc7636).  Confidential apps are still highly encouraged to implement PKCE to mitigate forms of MITM attacks such as multiple native app devices registering for the same custom url scheme used as the OAUTH2 redirect_uri in the authorization_code grant.
 
 ## For Developers
 

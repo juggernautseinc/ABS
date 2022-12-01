@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.33, created on 2022-09-12 23:31:52
+<?php /* Smarty version 2.6.33, created on 2022-10-19 12:11:12
          compiled from /var/www/html/absemr/interface/forms/soap/templates/general_new.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'xlt', '/var/www/html/absemr/interface/forms/soap/templates/general_new.html', 3, false),array('function', 'headerTemplate', '/var/www/html/absemr/interface/forms/soap/templates/general_new.html', 4, false),array('function', 'xla', '/var/www/html/absemr/interface/forms/soap/templates/general_new.html', 63, false),array('modifier', 'attr', '/var/www/html/absemr/interface/forms/soap/templates/general_new.html', 12, false),array('modifier', 'text', '/var/www/html/absemr/interface/forms/soap/templates/general_new.html', 17, false),)), $this); ?>

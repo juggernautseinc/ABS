@@ -67,10 +67,12 @@ class ModulesApplication
             $db_modules[] = $row["mod_name"];
         }
 
-        $this->bootstrapCustomModules($kernel->getEventDispatcher(), $customModulePath);
+        // let's get our autoloader that people can tie into if they need it
+        $autoloader = new ModulesClassLoader($webRootPath);
+        $this->bootstrapCustomModules($autoloader, $kernel->getEventDispatcher(), $customModulePath);
     }
 
-    private function bootstrapCustomModules($eventDispatcher, $customModulePath)
+    private function bootstrapCustomModules(ModulesClassLoader $classLoader, $eventDispatcher, $customModulePath)
     {
         // we skip the audit log as it has no bearing on user activity and is core system related...
         $resultSet = sqlStatementNoLog($statement = "SELECT mod_name, mod_directory FROM modules WHERE mod_active = 1 AND type != 1 ORDER BY `mod_ui_order`, `date`");
@@ -93,13 +95,13 @@ class ModulesApplication
             }
         }
         foreach ($db_modules as $module) {
-            $this->loadCustomModule($module, $eventDispatcher);
+            $this->loadCustomModule($classLoader, $module, $eventDispatcher);
         }
         // TODO: stephen we should fire an event saying we've now loaded all the modules here.
         // Unsure who'd be listening or care.
     }
 
-    private function loadCustomModule($module, $eventDispatcher)
+    private function loadCustomModule(ModulesClassLoader $classLoader, $module, $eventDispatcher)
     {
         try {
             // the only thing in scope here is $module and $eventDispatcher which is ok for our bootstrap piece.
@@ -128,10 +130,11 @@ class ModulesApplication
     {
         if (is_array($files) && !empty($files)) {
             // for safety we only allow the scripts to be from the local filesystem for now
-            // TODO: talk with @brady.miller if the system has a safer mechanism to lock down an asset file to the local domain
-            // how much do we want to protect the end user vs allow external scripts for things such as CDN access or 3rd party integration?
             $filteredFiles = array_filter(array_map(function ($scriptSrc) {
-                $realPath = realpath($GLOBALS['fileroot'] . $scriptSrc);
+                // scripts that have any kind of parameters in them such as a cache buster mess up finding the real path
+                // we need to strip that out and then check against the real path
+                $scriptSrcPath = parse_url($scriptSrc, PHP_URL_PATH);
+                $realPath = realpath($GLOBALS['fileroot'] . $scriptSrcPath);
                 // make sure we haven't left our root path ie interface folder
                 if (strpos($realPath, $GLOBALS['fileroot'] . '/interface/modules/') === 0 && file_exists($realPath)) {
                     return $scriptSrc;
