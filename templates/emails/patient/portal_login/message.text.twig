@@ -2,6 +2,7 @@
 {{ "Portal Account Name"|xlt }}: {{ uname }}
 {{ "Login User Name"|xlt }}: {{ login_uname|text }}
 {{ "Password"|xlt }}: {{ pwd|text }}
+{{ "Portal Address" }}{{ portal_onsite_two_address|text }}
 {% if enforce_signin_email %}{{ "Login Trusted Email"|xlt  }}: {% if email_direct is not empty %}{{  email_direct|text }}{% else %}{{ "Is Required. Contact Provider."|xlt}}{% endif %}{% endif %}
 
 
