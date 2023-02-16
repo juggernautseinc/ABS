@@ -10,6 +10,9 @@
             <strong>{{ "Login User Name"|xlt }}:</strong> {{ login_uname|text }}
             <br /><strong>{{ "Password"|xlt }}:</strong>
             {{ pwd|text }}<br /><br />
+            {{ "Patient Portal Web Address"|xlt }}:<br />
+            <a href='{{ portal_onsite_two_address|attr }}' target='_blank'>{{ portal_onsite_two_address|text }}</a>
+            <br /><br />
             {% if enforce_signin_email %}
                 <strong>{{ "Login Trusted Email"|xlt  }}</strong>:
                 {% if email_direct is not empty %}
