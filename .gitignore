@@ -9,6 +9,7 @@ node_modules
 /vendor/*
 /public/assets/*
 /public/themes/*
+/sites/*
 !/public/assets/modified
 /.docs/.out/*
 
