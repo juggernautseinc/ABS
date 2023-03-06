@@ -285,7 +285,7 @@ $templateService = new DocumentTemplateService();
     <div class="container-xl px-1">
         <nav id="verytop" class="navbar navbar-expand-lg navbar-light bg-light px-1 pt-3 pb-1 m-0 sticky-top" style="z-index:1030;">
             <a class="navbar-brand mt-1 mr-1"><h3><?php echo xlt("My Documents") ?></h3></a>
-            <button class="navbar-toggler">New Patient Intake</button>
+            <button class="navbar">New Patient Intake</button>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topmenu" aria-controls="topmenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
