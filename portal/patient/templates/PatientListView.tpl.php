@@ -352,6 +352,16 @@ if ($this->exclude) {
                  <span class="help-inline"></span>
                 </div>
             </div>
+            <div class="col-sm-auto px-3 form-group plist-group" id="livingInputContainer">
+                <label class="plist-label" for="living"><?php echo xlt('Living Environment')?></label><br />
+                <div class="controls inline-inputs">
+                    <?php
+                        # Generate drop down list for Living Environment
+                        echo generate_select_list('living', 'Dem_Living_Environment', $row['living'], xl('Living Environment'), 'Unassigned', "form-control");
+                    ?>
+                    <span class="help-inline"></span>
+                </div>
+            </div>
             <div class="col-sm-auto px-3 form-group plist-group dynhide" id="familySizeInputContainer">
                     <label class="plist-label" for="familySize"><?php echo xlt('Family Size')?></label>
                     <div class="controls inline-inputs">
