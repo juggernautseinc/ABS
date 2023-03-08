@@ -281,12 +281,12 @@ if ($this->exclude) {
                         <span class="help-inline"></span>
                     </div>
                 </div><!-- -->
-                <div class="col-sm-auto px-3 form-group plist-group dynhide" id="refProvideridInputContainer">
+                <!--<div class="col-sm-auto px-3 form-group plist-group dynhide" id="refProvideridInputContainer">
                     <label class="plist-label" for="refProviderid"><?php echo xlt('Referral Provider')?></label>
                     <div class="controls inline-inputs">
                         <select  disabled class="form-control" id="refProviderid"  value="<?php echo $row['refProviderid'] ?>">
                             <?php
-                            echo "<option value=''>" . xlt('Unassigned') . "</option>";
+                            /*echo "<option value=''>" . xlt('Unassigned') . "</option>";
                             foreach ($this->users_list as $user) {
                                 $user_name = text($user['fname'] . ' ' . $user['lname']);
                                 $id = attr($user['id']);
@@ -295,12 +295,12 @@ if ($this->exclude) {
                                     echo " selected";
                                 }
                                 echo ">$user_name</option>";
-                            }
+                            }*/
                             ?>
                         </select>
                         <span class="help-inline"></span>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-sm-auto px-3 form-group plist-group" id="emailInputContainer">
                     <label class="plist-label" for="email"><?php echo xlt('Email')?></label>
                     <div class="controls inline-inputs">
@@ -323,7 +323,7 @@ if ($this->exclude) {
                     </div>
                 </div>
             <div class="col-sm-auto px-3 form-group plist-group" id="raceInputContainer">
-                <label class="plist-label" for="race"><?php echo xlt('Race')?></label><br />
+                <label class="plist-label text-danger" for="race"><?php echo xlt('Race')?></label><br />
                 <div class="controls inline-inputs">
                     <?php
                   # Generate drop down list for Race
@@ -343,7 +343,7 @@ if ($this->exclude) {
                     </div>
             </div>
             <div class="col-sm-auto px-3 form-group plist-group" id="religionInputContainer">
-                <label class="plist-label" for="religion"><?php echo xlt('Religion')?></label><br />
+                <label class="plist-label text-danger" for="religion"><?php echo xlt('Religion')?></label><br />
                 <div class="controls inline-inputs">
                     <?php
                   # Generate drop down list for Religion
@@ -353,7 +353,7 @@ if ($this->exclude) {
                 </div>
             </div>
             <div class="col-sm-auto px-3 form-group plist-group" id="livingInputContainer">
-                <label class="plist-label" for="living"><?php echo xlt('Living Environment')?></label><br />
+                <label class="plist-label text-danger" for="living"><?php echo xlt('Living Environment')?></label><br />
                 <div class="controls inline-inputs">
                     <?php
                         # Generate drop down list for Living Environment
