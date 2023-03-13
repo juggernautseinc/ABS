@@ -9,7 +9,7 @@
         "requirement": 0
     },
 	{
-        "label": "History",
+        "label": "Intake",
         "menu_id": "history",
         "target": "main",
         "on_click":"top.restoreSession()",
