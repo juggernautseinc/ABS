@@ -142,6 +142,9 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     <div class="row">
         <h3>Clinical Observation</h3>
     </div>
+    <div class="row">
+        <h3>Therapeutic Questions</h3>
+    </div>
 
 </div><!--end of container div -->
 <?php $oemr_ui->oeBelowContainerDiv();?>
