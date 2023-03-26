@@ -146,7 +146,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div>
     </div>
     <div class="row">
-        <h3>Therapeutic Questions</h3>
+        <h3>Therapeutic Questions Results</h3>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             Patient questions responses go here
         </div>
