@@ -597,15 +597,15 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                 });
             });
             placeHtml("disc_fragment.php", "disclosures_ps_expand");
-            placeHtml("labdata_fragment.php", "labdata_ps_expand");
-            placeHtml("track_anything_fragment.php", "track_anything_ps_expand");
+            //placeHtml("labdata_fragment.php", "labdata_ps_expand");
+            //placeHtml("track_anything_fragment.php", "track_anything_ps_expand");
             <?php if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) { ?>
                 // Initialize the Vitals form if it is registered and user is authorized.
-                placeHtml("vitals_fragment.php", "vitals_ps_expand");
+                //placeHtml("vitals_fragment.php", "vitals_ps_expand");
             <?php } ?>
 
             <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_crw']) { ?>
-                placeHtml("clinical_reminders_fragment.php", "clinical_reminders_ps_expand", true, true).then(() => {
+                //placeHtml("clinical_reminders_fragment.php", "clinical_reminders_ps_expand", true, true).then(() => {
                     // (note need to place javascript code here also to get the dynamic link to work)
                     $(".medium_modal").on('click', function(e) {
                         e.preventDefault();
@@ -629,7 +629,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             ?>
 
             <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_prw']) { ?>
-                placeHtml("patient_reminders_fragment.php", "patient_reminders_ps_expand", false, true);
+                //placeHtml("patient_reminders_fragment.php", "patient_reminders_ps_expand", false, true);
             <?php } // end prw
             ?>
 
