@@ -1272,7 +1272,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         echo $twig->getTwig()->render('patient/card/amendments.html.twig', $viewArgs);
                     endif; // end amendments authorized
 
-                    if (AclMain::aclCheckCore('patients', 'lab')) :
+                    /*if (AclMain::aclCheckCore('patients', 'lab')) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('lab'));
                         // labdata expand collapse widget
                         // check to see if any labdata exist
@@ -1298,7 +1298,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                             'appendedInjection' => $dispatchResult->getAppendedInjection(),
                         ];
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
-                    endif; // end labs authorized
+                    endif;*/ // end labs authorized
 
                     if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) :
                         $dispatchResult = $ed->dispatch(CardRenderEvent::EVENT_HANDLE, new CardRenderEvent('vital_sign'));
