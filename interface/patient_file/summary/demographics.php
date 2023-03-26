@@ -605,7 +605,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             <?php } ?>
 
             <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_crw']) { ?>
-                //placeHtml("clinical_reminders_fragment.php", "clinical_reminders_ps_expand", true, true).then(() => {
+                placeHtml("clinical_reminders_fragment.php", "clinical_reminders_ps_expand", true, true).then(() => {
                     // (note need to place javascript code here also to get the dynamic link to work)
                     $(".medium_modal").on('click', function(e) {
                         e.preventDefault();
