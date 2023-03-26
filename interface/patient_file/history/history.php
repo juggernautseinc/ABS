@@ -141,7 +141,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     </div>
     <div class="row">
         <h3>Clinical Observation</h3>
-        <div class="col-sm-12" style="margin-top: 20px;">
+        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             Question responses will go here in this section
         </div>
     </div>
