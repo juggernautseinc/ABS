@@ -145,8 +145,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             <?php
                 $formname = 'LBF_Therapeutic';
                 $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
-
-                lbf_report($pid, $enc['encounter'], $cols, $id, $formname);
+                 echo $enc['encounter'];
+                //lbf_report($pid, $enc['encounter'], $cols, $id, $formname);
             ?>
         </div>
     </div>
