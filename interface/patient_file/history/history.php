@@ -146,7 +146,6 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                 require_once "../../forms/LBF/report.php";
                 $formname = 'LBF_Therapeutic';
                 $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
-                 echo $enc['encounter'];
                 lbf_report($_SESSION['pid'], $enc['encounter'], 2, 24, $formname);
             ?>
         </div>
@@ -154,7 +153,11 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     <div class="row">
         <h3>Mental Status Exam Results</h3>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
-            Question responses will go here in this section
+            <?php
+                $statsFormName = 'LBF_MentalStatusExam';
+                $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
+                lbf_report($_SESSION['pid'], $enc['encounter'], 2, 25, $statsFormName);
+            ?>
         </div>
     </div>
 </div><!--end of container div -->
