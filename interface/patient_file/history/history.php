@@ -204,11 +204,11 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     for (i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function() {
             this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
+            var formcontent = this.nextElementSibling;
+            if (formcontent.style.display === "block") {
+                formcontent.style.display = "none";
             } else {
-                content.style.display = "block";
+                formcontent.style.display = "block";
             }
         });
     }
