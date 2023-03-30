@@ -1669,7 +1669,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                             $appts[] = $row;
                         }
 
-                        if ($resNotNull) {
+                       /* if ($resNotNull) {
                             // Show Recall if one exists
                             $query = sqlStatement("SELECT * FROM `medex_recalls` WHERE `r_pid` = ?", [(int)$pid]);
                             $recallArr = [];
@@ -1693,7 +1693,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                                 'prependedInjection' => $dispatchResult->getPrependedInjection(),
                                 'appendedInjection' => $dispatchResult->getAppendedInjection(),
                             ]);
-                        }
+                        }*/
                     } // End of Appointments Widget.
 
                     /* Widget that shows recurrences for appointments. */
