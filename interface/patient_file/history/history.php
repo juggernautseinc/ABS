@@ -143,6 +143,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         <h3>Therapeutic Questions Results</h3>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
+                require_once "../../forms/LBF/report.php";
                 $formname = 'LBF_Therapeutic';
                 $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
                  echo $enc['encounter'];
