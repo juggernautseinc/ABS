@@ -23,6 +23,7 @@ use OpenEMR\Common\Acl\AclMain;
 
 function lbf_report($pid, $encounter, $cols, $id, $formname, $no_wrap = false)
 {
+    file_put_contents("/var/www/html/traps/lbf.txt", $cols . " " . $id . " " . $formname);
     global $CPR;
     require_once($GLOBALS["srcdir"] . "/options.inc.php");
 
