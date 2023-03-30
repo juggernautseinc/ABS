@@ -142,7 +142,12 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     <div class="row">
         <h3>Therapeutic Questions Results</h3>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
-            Patient questions responses go here
+            <?php
+                $formname = 'LBF_Therapeutic';
+                $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
+
+                lbf_report($pid, $enc['encounter'], $cols, $id, $formname);
+            ?>
         </div>
     </div>
     <div class="row">
