@@ -61,6 +61,30 @@ if (!empty($grparr['']['grp_size'])) {
 }
 <?php } ?>
 </style>
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+    </style>
 <?php
 $arrOeUiSettings = array(
     'heading_title' => xl('History and Lifestyle'),
@@ -140,8 +164,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div>
     </div>
     <div class="row">
-        <h3>Therapeutic Questions Results</h3>
-        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
+        <button class="collapsible">Therapeutic Questions Results</button>
+        <div class="col-sm-12 mb-5 formcontent" style="margin-top: 20px;">
             <?php
                 require_once "../../forms/LBF/report.php";
                 $formname = 'LBF_Therapeutic';
@@ -151,8 +175,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div>
     </div>
     <div class="row">
-        <h3>Mental Status Exam Results</h3>
-        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
+        <button class="collapsible">Mental Status Exam Results</button>
+        <div class="col-sm-12 mb-5 formcontent" style="margin-top: 20px;">
             <?php
                 $statsFormName = 'LBF_MentalStatusExam';
                 $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
@@ -173,6 +197,21 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     var skipArray = [<?php echo !empty($condition_str) ? js_escape($condition_str) : ''; ?>];
     checkSkipConditions();
 </script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
 </body>
 </html>
