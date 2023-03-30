@@ -140,18 +140,17 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div>
     </div>
     <div class="row">
-        <h3>Mental Status Exam Results</h3>
-        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
-            Question responses will go here in this section
-        </div>
-    </div>
-    <div class="row">
         <h3>Therapeutic Questions Results</h3>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             Patient questions responses go here
         </div>
     </div>
-
+    <div class="row">
+        <h3>Mental Status Exam Results</h3>
+        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
+            Question responses will go here in this section
+        </div>
+    </div>
 </div><!--end of container div -->
 <?php $oemr_ui->oeBelowContainerDiv();?>
 <script>
