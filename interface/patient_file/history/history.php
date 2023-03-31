@@ -163,9 +163,10 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             </div>
         </div>
     </div>
-    <div class="row">
-        <button type="button" name="collapsible">Therapeutic Questions Results</button>
-        <div class="col-sm-12 mb-5 formcontent" style="margin-top: 20px;">
+    <button type="button" class="collapsible">Therapeutic Questions Results</button>
+    <div class="row formcontent">
+
+        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
                 require_once "../../forms/LBF/report.php";
                 $formname = 'LBF_Therapeutic';
@@ -174,9 +175,10 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             ?>
         </div>
     </div>
-    <div class="row">
-        <button type="button" name="collapsible">Mental Status Exam Results</button>
-        <div class="col-sm-12 mb-5 formcontent" style="margin-top: 20px;">
+    <button type="button" class="collapsible">Mental Status Exam Results</button>
+    <div class="row formcontent">
+
+        <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
                 $statsFormName = 'LBF_MentalStatusExam';
                 $enc = sqlQuery("select encounter from forms where pid = ? and formdir = ? order by id desc limit 1", [$_SESSION['pid'], $formname]);
@@ -198,7 +200,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     checkSkipConditions();
 </script>
 <script>
-    var coll = document.getElementsByName("collapsible");
+    var coll = document.getElementsByClassName("collapsible");
     var i;
 
     for (i = 0; i < coll.length; i++) {
