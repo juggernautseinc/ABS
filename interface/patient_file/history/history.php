@@ -165,7 +165,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     </div>
     <button type="button" class="collapsible" data-toggle="collapse" data-target="#formcontent1">Therapeutic Questions Results</button>
     <div id="formcontent1" class="row collapse">
-        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary ml-3 btn-edit">Edit</button>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
                 require_once "../../forms/LBF/report.php";
@@ -177,7 +177,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     </div>
     <button type="button" class="collapsible" data-toggle="collapse" data-target="#formcontent2">Mental Status Exam Results</button>
     <div id="formcontent2" class="row collapse">
-        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary ml-3 btn-edit">Edit</button>
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
                 $statsFormName = 'LBF_MentalStatusExam';
