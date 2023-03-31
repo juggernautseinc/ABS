@@ -163,9 +163,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             </div>
         </div>
     </div>
-    <button type="button" class="collapsible">Therapeutic Questions Results</button>
-    <div class="row formcontent">
-
+    <button type="button" class="collapsible" data-toggle="collapse" data-target="#formcontent1">Therapeutic Questions Results</button>
+    <div id="formcontent1" class="row collapse">
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
                 require_once "../../forms/LBF/report.php";
@@ -175,8 +174,8 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             ?>
         </div>
     </div>
-    <button type="button" class="collapsible">Mental Status Exam Results</button>
-    <div class="row formcontent">
+    <button type="button" class="collapsible" data-toggle="collapse" data-target="#formcontent2">Mental Status Exam Results</button>
+    <div id="formcontent2" class="row collapse">
 
         <div class="col-sm-12 mb-5" style="margin-top: 20px;">
             <?php
@@ -199,21 +198,6 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     var skipArray = [<?php echo !empty($condition_str) ? js_escape($condition_str) : ''; ?>];
     checkSkipConditions();
 </script>
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var formcontent = this.nextElementSibling;
-            if (formcontent.style.display === "block") {
-                formcontent.style.display = "none";
-            } else {
-                formcontent.style.display = "block";
-            }
-        });
-    }
-</script>
 </body>
 </html>
