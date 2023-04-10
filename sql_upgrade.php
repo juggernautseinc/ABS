@@ -73,6 +73,10 @@ while (false !== ($sfname = readdir($dh))) {
         $version = $matches[1] . '.' . $matches[2] . '.' . $matches[3];
         $versions[$version] = $sfname;
     }
+    if(preg_match('/^ABS.sql$/', $sfname, $matches)){
+        $version  = $matches[0];
+        $versions[$version] = $sfname;
+     }
 }
 
 closedir($dh);

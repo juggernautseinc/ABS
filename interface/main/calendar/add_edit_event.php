@@ -50,6 +50,7 @@ require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
 require_once($GLOBALS['srcdir'] . '/patient_tracker.inc.php');
 require_once($GLOBALS['incdir'] . "/main/holidays/Holidays_Controller.php");
 require_once($GLOBALS['srcdir'] . '/group.inc');
+require_once('./zoom_functions.php');
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Twig\TwigContainer;
@@ -748,7 +749,10 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
      *                    INSERT NEW EVENT(S)
      * ======================================================*/
 
-        $eid = InsertEventFull();
+	$eid = InsertEventFull();
+	$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
+	if($_POST['form_category'] == $getIntake['pc_catid'])
+          zoom_meeting($eid);
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
         $patientAppointmentSetEvent->eid = $eid;  //setting the appointment id to an object

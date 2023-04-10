@@ -505,7 +505,10 @@ foreach ($list_acl_groups as $value) {
                 ?>
             </select>
         </td>
-        <td></td>
+	<td><span class=text><?php echo xlt('Zoom user id'); ?>: </span></td>
+	<td>
+		<input type="text" name="zoom_user_id" style="width:120px;" class="form-control" value="">
+	</td>
     </tr>
     <tr>
         <td colspan="4">

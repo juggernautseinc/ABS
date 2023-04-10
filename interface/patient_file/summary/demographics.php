@@ -974,7 +974,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
 
     <div id="container_div" class="<?php echo $oemr_ui->oeContainer(); ?> mb-2">
         <a href='../reminder/active_reminder_popup.php' id='reminder_popup_link' style='display: none' onclick='top.restoreSession()'></a>
-        <a href='../birthday_alert/birthday_pop.php?pid=<?php echo attr_url($pid); ?>&user_id=<?php echo attr_url($_SESSION['authUserID']); ?>' id='birthday_popup' style='display: none;' onclick='top.restoreSession()'></a>
+	<a href='../birthday_alert/birthday_pop.php?pid=<?php echo attr_url($pid); ?>&user_id=<?php echo attr_url($_SESSION['authUserID']); ?>' id='birthday_popup' style='display: none;' onclick='top.restoreSession()'></a>
         <?php
 
         if ($thisauth) {
@@ -985,8 +985,16 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
 
         if ($thisauth) :
             require_once("$include_root/patient_file/summary/dashboard_header.php");
-        endif;
-
+	endif;
+	//for insured patient we need to set 2nd parameter as true
+	$getPatientBalance = get_patient_balance($pid);
+	if($getPatientBalance == 0){
+		$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
+        	$getMeetingUrl = sqlQuery("select meeting_link,pc_eventDate from openemr_postcalendar_events where pc_pid = ? and pc_catid = ? order by pc_eid desc limit 1", [$pid, $getIntake['pc_catid']]);
+		$meetingUrl = $getMeetingUrl['meeting_link'];
+		if(($getMeetingUrl['pc_eventDate'] == date('Y-m-d')) && $meetingUrl != '')
+	 	echo '<div style = "margin-bottom:10px"><a class = "btn btn-primary" href ="' . $meetingUrl . '" target = "_blank">Video</a></div>';
+	}
         $list_id = "dashboard"; // to indicate nav item is active, count and give correct id
         // Collect the patient menu then build it
         $menuPatient = new PatientMenuRole($twig);

@@ -54,6 +54,17 @@ $whereto = $_SESSION['whereto'] ?? null;
 $user = $_SESSION['sessionUser'] ?? 'portal user';
 $result = getPatientData($pid);
 
+//for insured patient we need to set 2nd parameter as true
+$getPatientBalance = get_patient_balance($pid);
+$patientBalanceStatus = false;
+$meetingUrl = '';
+if($getPatientBalance == 0){
+	$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
+        $getMeetingUrl = sqlQuery("select meeting_link,pc_eventDate from openemr_postcalendar_events where pc_pid = ? and pc_catid = ? order by pc_eid desc limit 1", [$pid, $getIntake['pc_catid']]);
+        $meetingUrl = $getMeetingUrl['meeting_link'];
+	if(($getMeetingUrl['pc_eventDate'] == date('Y-m-d')) && $meetingUrl != '')
+	   $patientBalanceStatus = true;
+}
 $msgs = getPortalPatientNotes($_SESSION['portal_username']);
 $msgcnt = count($msgs);
 $newcnt = 0;
@@ -220,6 +231,7 @@ function buildNav($newcnt, $pid, $result)
         ];
     }
 
+
     for ($i = 0, $iMax = count($navItems); $i < $iMax; $i++) {
         if ($GLOBALS['allow_portal_appointments'] && $navItems[$i]['label'] === ($result['fname'] . ' ' . $result['lname'])) {
             $navItems[$i]['children'][] = [
@@ -270,7 +282,7 @@ function buildNav($newcnt, $pid, $result)
                 'icon' => 'fa-credit-card',
                 'dataToggle' => 'collapse'
             ];
-        }
+	}
     }
 
     return $navItems;
@@ -314,5 +326,7 @@ echo $twig->render('portal/home.html.twig', [
     'eventNames' => [
         'sectionRenderPost' => RenderEvent::EVENT_SECTION_RENDER_POST,
         'scriptsRenderPre' => RenderEvent::EVENT_SCRIPTS_RENDER_PRE
-    ]
+    ],
+    'patientBalanceStatus' => $patientBalanceStatus,
+    'meetingUrl' => $meetingUrl
 ]);

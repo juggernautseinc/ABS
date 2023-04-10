@@ -4210,6 +4210,49 @@ $GLOBALS_METADATA = array(
         ],
 
     ],
+    'API' => array(
+        'api_sender_name' => array(
+            xl('Sender Name'),
+            'text',                           // data type
+            '',                               // default
+            xl('Name of the sender.')
+        ),
+
+        'api_sender_mail' => array(
+            xl('Sender Email'),
+            'text',                           // data type
+            '',                               // default
+            xl('Email address of the sender for patient reminders. Replies to patient reminders will be directed to this address. It is important to use an address from your clinic\'s domain to avoid help prevent patient reminders from going to junk mail folders.')
+        ),
+        'api_sender_pass' => array(
+            xl('SMTP Password for Authentication'),
+            'text',                           // data type
+            '',                               // default
+            xl('Must be empty if SMTP authentication is not used.')
+        ),
+
+    ),
+    'Zoom Configuration' => array(
+       'zoom_api_key' => array(
+            xl('Zoom Client Key'),
+            'text',
+            '',
+            xl('Zoom Api Key')
+        ),
+
+       'zoom_secret_key' => array(
+            xl('Zoom Secret Key'),
+            'text',
+            '',
+            xl('Zoom Secret Key')
+       ),
+       'zoom_account_id' => array(
+            xl('Zoom Account ID'),
+            'text',
+            '',
+            xl('Zoom Account ID')
+       ),
+    ),
 );
 
 if (!empty($GLOBALS['ippf_specific'])) {

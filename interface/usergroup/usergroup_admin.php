@@ -163,6 +163,9 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] == "user_admin") {
             //END (CHEMED)
         }
 
+	if ($_POST['zoom_user_id']) {
+	    sqlStatement("update users set zoom_user_id = ? where id = ? ", array($_POST["zoom_user_id"], $_POST["id"]));
+	}
         if (!empty($GLOBALS['gbl_fac_warehouse_restrictions']) || !empty($GLOBALS['restrict_user_facility'])) {
             if (empty($_POST["schedule_facility"])) {
                 $_POST["schedule_facility"] = array();
@@ -369,7 +372,8 @@ if (isset($_POST["mode"])) {
             "', default_warehouse = '" . add_escape_custom(trim((isset($_POST['default_warehouse']) ? $_POST['default_warehouse'] : ''))) .
             "', irnpool = '"       . add_escape_custom(trim((isset($_POST['irnpool']) ? $_POST['irnpool'] : ''))) .
             "', calendar = '"      . add_escape_custom($calvar) .
-            "', portal_user = '"   . add_escape_custom($portalvar) .
+	    "', portal_user = '"   . add_escape_custom($portalvar) .
+	    "', zoom_user_id = '"   . add_escape_custom(trim((isset($_POST['zoom_user_id']) ? $_POST['zoom_user_id'] : ''))) .
             "', supervisor_id = '" . add_escape_custom((isset($_POST['supervisor_id']) ? (int)$_POST['supervisor_id'] : 0)) .
             "'";
 
