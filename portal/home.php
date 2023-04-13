@@ -21,6 +21,7 @@ require_once("$srcdir/patient.inc");
 require_once("$srcdir/options.inc.php");
 require_once('lib/portal_mail.inc');
 require_once(__DIR__ . '/../library/appointments.inc.php');
+require_once(__DIR__ . '/../interface/main/calendar/zoom_functions.php');
 
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Twig\TwigContainer;
@@ -58,12 +59,12 @@ $result = getPatientData($pid);
 $getPatientBalance = get_patient_balance($pid);
 $patientBalanceStatus = false;
 $meetingUrl = '';
+//Enabling zoom video call
 if($getPatientBalance == 0){
-	$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
-        $getMeetingUrl = sqlQuery("select meeting_link,pc_eventDate from openemr_postcalendar_events where pc_pid = ? and pc_catid = ? order by pc_eid desc limit 1", [$pid, $getIntake['pc_catid']]);
-        $meetingUrl = $getMeetingUrl['meeting_link'];
-	if(($getMeetingUrl['pc_eventDate'] == date('Y-m-d')) && $meetingUrl != '')
-	   $patientBalanceStatus = true;
+	$videoData = enableVideoButton('portal', $pid);
+	$videoData = json_decode($videoData, true);
+	$patientBalanceStatus = $videoData['patientBalanceStatus'] ?? false;
+	$meetingUrl = $videoData['meetingUrl'] ?? '';
 }
 $msgs = getPortalPatientNotes($_SESSION['portal_username']);
 $msgcnt = count($msgs);

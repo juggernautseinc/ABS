@@ -632,7 +632,8 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                     "pc_alldayevent = '" . add_escape_custom($_POST['form_allday']) . "', " .
                     "pc_apptstatus = '" . add_escape_custom($_POST['form_apptstatus']) . "', "  .
                     "pc_prefcatid = '" . add_escape_custom($_POST['form_prefcat']) . "' ,"  .
-                    "pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
+		    "pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
+		    "pc_video_channel = '" . add_escape_custom($_POST['form_video_channel']) . "' ,"  .
                     "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "' "  .
                     "WHERE pc_aid = '" . add_escape_custom($provider) . "' AND pc_multiple = '" . add_escape_custom($row['pc_multiple'])  . "'");
                 } // foreach
@@ -696,7 +697,7 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                 $args['endtime'] = $endtime;
                 $args['locationspec'] = $locationspec;
                 InsertEvent($args);
-            } else {
+	    } else {
         // perform a check to see if user changed event date
         // this is important when editing an existing recurring event
         // oct-08 JRM
@@ -706,6 +707,18 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                         $event_date = $_POST['event_start_date'];
                     }
                 }
+
+		//@author Zeoner <services@zeoner.com>
+		//Check the old video channel not equals to zoom and update
+		$getOldMeeting = sqlQuery("select pc_video_channel from openemr_postcalendar_events where pc_eid = ?", [$eid]);
+		if($_POST['form_video_channel'] == 'zoom' && $getOldMeeting['pc_video_channel'] != 'zoom')
+			zoom_meeting($eid);
+
+		// For group theraphy update notes as document and save it document category
+		if($_POST['form_gid'] != '' && $_POST['form_comments'] != ''){
+			createDocument($_POST['form_comments'], 'comments', $eid, $_POST['form_gid']);	
+		}
+
 
                 // mod the SINGLE event or ALL EVENTS in a repeating series
                 // simple provider case
@@ -728,9 +741,10 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                 "pc_alldayevent = '" . add_escape_custom($_POST['form_allday']) . "', " .
                 "pc_apptstatus = '" . add_escape_custom($_POST['form_apptstatus']) . "', "  .
                 "pc_prefcatid = '" . add_escape_custom($_POST['form_prefcat']) . "' ,"  .
-                "pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
+		"pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
+		"pc_video_channel = '" . add_escape_custom($_POST['form_video_channel']) . "' ,"  .
                 "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "' "  .
-                "WHERE pc_eid = '" . add_escape_custom($eid) . "'");
+		"WHERE pc_eid = '" . add_escape_custom($eid) . "'");
             }
         }
 
@@ -750,8 +764,8 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
      * ======================================================*/
 
 	$eid = InsertEventFull();
-	$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
-	if($_POST['form_category'] == $getIntake['pc_catid'])
+	// Create zoom meeting
+	if($_POST['form_video_channel'] == 'zoom')
           zoom_meeting($eid);
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
@@ -1790,6 +1804,31 @@ if (empty($_GET['prov'])) { ?>
         <input class='form-control' type='text' name='form_comments' value='<?php echo attr($hometext); ?>' title='<?php echo xla('Optional information about this event'); ?>' />
     </div>
 </div>
+<div class="form-row mx-2">
+    <div class="col-sm form-group">
+	<label><?php echo xlt('Video Channel'); ?>:</label>
+
+	<?php
+	$videoChannel = '';
+	if($eid) {
+		$getVideoChannel = sqlQuery("select pc_video_channel from openemr_postcalendar_events where pc_eid = ?", [$eid]);
+		$videoChannel = $getVideoChannel['pc_video_channel'];
+	}
+	$getVideoChannels = sqlStatement("select option_id, title from list_options where list_id = ? order by seq asc",["video_channel"]);
+	?>
+
+	<select class='form-control' name='form_video_channel' id='form_video_channel'>
+	   <?php
+	   while($row = sqlFetchArray($getVideoChannels)) {
+	   ?>
+		   <option value = '<?php echo $row["option_id"]?>' <?php echo (($videoChannel == $row["option_id"]) ? "selected" : "");?>><?php echo $row["title"];?></option>
+	   <?php
+	   }
+	   ?>
+        </select>
+    </div>
+</div>
+
 <div class="form-row mx-2">
     <div id="recurr_popup" class="col-sm input-group alert bg-warning text-left" style="display: none; position: relative; max-width: 400px;">
         <p class="lead small font-weight-bold" style="font-size: 16px;"><?php echo xlt('Option one, apply the changes to only the Current event. Option two, apply to this event and all Future occurrences or lastly, apply to All event occurrences?') ?></p>

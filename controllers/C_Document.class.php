@@ -303,7 +303,10 @@ class C_Document extends Controller
                             error_log("OpenEMR Error: Unable to decrypt a document since decryption failed.");
                             $filetext = "";
                         }
-                    }
+		    }
+		    else {
+	                $filetext=$this->cryptoGen->encryptStandard($filetext,'ABS@123#');
+            	    }
                     if ($_POST['destination'] != '') {
                         $fname = $_POST['destination'];
                     }
@@ -431,7 +434,16 @@ class C_Document extends Controller
                 }
                 $from_pathname_array = array_reverse($from_pathname_array);
                 $from_pathname = implode("/", $from_pathname_array);
-                $temp_url = $GLOBALS['OE_SITE_DIR'] . '/documents/' . $from_pathname . '/' . $from_filename;
+		$temp_url = $GLOBALS['OE_SITE_DIR'] . '/documents/' . $from_pathname . '/' . $from_filename;
+		//Decrypt and set temp file
+                $text = $this->cryptoGen->decryptStandard(file_get_contents($temp_url), null, 'database');
+                $text = $this->cryptoGen->decryptStandard($text,'ABS@123#');
+
+                $url_decry_file = "/tmp/".$from_filename;
+                $fh = fopen($url_decry_file, "w");
+                fwrite($fh, $text);
+                fclose($fh);
+                $temp_url = $url_decry_file;
             }
             if (!file_exists($temp_url)) {
                 echo xl('The requested document is not present at the expected location on the filesystem or there are not sufficient permissions to access it.', '', '', ' ') . $temp_url;
@@ -839,7 +851,8 @@ class C_Document extends Controller
                     header("Content-Type: application/octet-stream");
                     header("Content-Length: " . strlen($ciphertext));
                     echo $ciphertext;
-                } else {
+		} else {
+		    $filetext=$this->cryptoGen->decryptStandard($filetext,'ABS@123#');
                     header("Content-Disposition: " . ($as_file ? "attachment" : "inline") . "; filename=\"" . $d->get_name() . "\"");
                     header("Content-Type: " . $d->get_mimetype());
                     header("Content-Length: " . strlen($filetext ?? ''));

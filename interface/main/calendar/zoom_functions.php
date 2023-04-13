@@ -1,20 +1,28 @@
 <?php
 /**
- *
- *Function to creatw and save zoom call details
+ *@author Zeoner <services@zeoner.com>
+ *Function to create and save zoom call details
  *
  *
  * **/
+
+include_once __DIR__."/../../globals.php";
 include_once 'zoom/api.php';
 include_once $GLOBALS['vendor_dir'] ."/autoload.php";
+include_once $GLOBALS['srcdir'] ."/groups.inc.php";
+require_once(__DIR__ . "/../../../src/Common/Crypto/CryptoGen.php");
 
+use PHPMailer\PHPMailer\PHPMailer;
+use OpenEMR\Common\Crypto\CryptoGen;
+use Mpdf\Mpdf;
+
+//Create zoom meeting
 function zoom_meeting($eid){
     $args=sqlQuery("select * from openemr_postcalendar_events where pc_eid=".$eid);
 
     $z=new API();
     $user_data=sqlQuery("select zoom_user_id from users where id=".$args['pc_aid']);
     $user = $user_data['zoom_user_id'];
-    //$user = "X9UwyxHaSo-2buiKLqDriw";
         if(!empty($user)){
                 $token = $z->zoom_jwt_token();
                 $url='users/'.$user.'/meetings';
@@ -32,5 +40,127 @@ function zoom_meeting($eid){
 }
 //end of zoom meeting
 
+//Create docuemnt for appointment comments - group theraphy
+function createDocument($fileContent = "", $fileName = "comments", $eid, $groupId) {
+
+	$config_mpdf = array(
+                'tempDir' => __DIR__ . '/tmp',
+		'format' => $GLOBALS['pdf_size'],
+		'margin_left' => $GLOBALS['pdf_left_margin'],
+                'margin_right' => $GLOBALS['pdf_right_margin'],
+                'margin_top' => $GLOBALS['pdf_top_margin'],
+                'margin_bottom' => $GLOBALS['pdf_bottom_margin'],
+                'setAutoBottomMargin' => 'stretch',
+                'setAutoTopMargin' => 'stretch',
+                'margin_header' => $GLOBALS['pdf_bottom_margin'],
+                'margin_footer' => $GLOBALS['pdf_bottom_margin'],
+	);
+	ob_start();
+	$groupParticipants = getParticipants($groupId, true);
+	foreach($groupParticipants as $key => $value){
+		$pid = $value['pid'];
+		$pdf = new mPDF($config_mpdf);
+	        $pdf->SetDisplayMode('real');
+	        $pdf->SetHTMLHeader("<br><br><br><br><br><br>");
+	        $html = '<html><body  style="background-color: white;border: 1px solid #041779;font-family:sans-serif;font-size:12px;padding-top:10px">';
+	        $html .= '<div id="content" style="padding-left:40px;padding-right:40px;padding-top:-50px;">'.$fileContent.'</div>';
+        	$html .= '</body></html>';
+	        $pdf->SetHTMLFooter("<br><br><br><br><br><br>");
+        	$pdf->WriteHTML($html);
+		$file_name = $fileName."_".$eid."_".$groupId."_".$pid.".pdf";
+		$path = dirname(dirname(__FILE__))."interface/main/calendar";
+	    	chmod($path, 0755);
+		$pdf->Output($file_name);
+		sendEmail("Group Comments", $value['email'], "Test", "./".$file_name);
+	
+		//Encrypt and store - to view document in Documents section
+	        $tmpfile = fopen("./".$file_name, "r");
+		$filetext1 = fread($tmpfile, filesize("./".$file_name));
+		$cryptoGen = new CryptoGen();
+        	$filetext1 = $cryptoGen->encryptStandard($filetext1, 'ABS@123#');
+	        $category_sql = sqlQuery("select id from categories where name='Group Theraphy Comments'");
+        	$category = $category_sql['id'];
+	        $d = new Document();
+        	$owner = $d->manual_set_owner;
+                    $rc = $d->createDocument(
+                        $pid,
+                        $category,
+                        $file_name,
+                        'application/pdf',
+                        $filetext1,
+                         '',
+                        1 ,
+                        $owner,
+                        $route
+		    );
+
+	         if ($rc){
+        	        print_r($rc);
+	         }else{
+	             unlink($file_name);
+		 }
+	}
+ 
+}
+
+
+// Send email functionality
+function sendEmail($subject, $to, $body, $attachment=null){
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->SMTPSecure = 'tls';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = '587';
+    $mail->SMTPAuth = true;
+    $mail->Username = $GLOBALS['patient_reminder_sender_email'];
+    $mail->From = $GLOBALS['patient_reminder_sender_email'];
+    $mail->FromName = $GLOBALS['patient_reminder_sender_email'];
+    //// Set up crypto object
+    $cryptoGen = new CryptoGen();
+    $mail->Password = $cryptoGen->decryptStandard($GLOBALS['SMTP_PASS']);
+    $mail->AddAddress($to);
+    $mail->Subject = $subject;
+    $mail->MsgHTML($body);
+    $mail->IsHTML(true);
+    if(!empty($attachment)&& $attachment != null){
+	$mail->addAttachment($attachment);
+    }
+    if ($mail->Send()) {
+          return true;
+    } else {
+        $email_status = $mail->ErrorInfo;
+        error_log("EMAIL ERROR: " . errorLogEscape($email_status), 0);
+        return false;
+    }
+}
+
+//Check patient or group having future appointments
+function enableVideoButton($callFrom = 'dashboard', $pid) {
+		$meetingUrl = '';
+		$getMeetingUrl = sqlQuery("select meeting_link, pc_startTime from openemr_postcalendar_events where pc_pid = ? and pc_eventDate >= now() and meeting_link IS NOT NULL and pc_startTime > now() order by pc_eid asc limit 1", [$pid]);
+
+                //whether patient in only one group
+                $checkForGroup = sqlQuery("select ope.meeting_link, ope.pc_startTime from therapy_groups_participants tg left join openemr_postcalendar_events ope on ope.pc_gid = tg.group_id where tg.pid = ? and ope.pc_eventDate >= now() and ope.meeting_link IS NOT NULL  and ope.pc_startTime > now() order by ope.pc_eid asc limit 1", [$pid]);
+		
+		if(!empty($getMeetingUrl) && $getMeetingUrl['meeting_link'] != ''){
+                        $meetingUrl = $getMeetingUrl['meeting_link'];
+                }
+                if(!empty($checkForGroup) && $checkForGroup['meeting_link'] != ''){
+                         $meetingUrl = $checkForGroup['meeting_link'];
+		}
+		if($callFrom == 'dashboard'){
+			$button = '';
+			if($meetingUrl != '')
+                        	$button = '<div style = "margin-bottom:10px"><a class = "btn btn-primary" href ="' . $meetingUrl . '" target = "_blank">Video</a></div>';
+			return $button;
+		} else {
+			$data = [];
+			if($meetingUrl != ''){
+			$data['meetingUrl'] = $meetingUrl;
+			$data['patientBalanceStatus'] = true;	
+			}
+			return json_encode($data, true);
+		}
+}
 ?>
 

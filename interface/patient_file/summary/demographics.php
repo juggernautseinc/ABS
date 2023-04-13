@@ -28,7 +28,7 @@ require_once("../history/history.inc.php");
 require_once("$srcdir/clinical_rules.php");
 require_once("$srcdir/group.inc");
 require_once(__DIR__ . "/../../../library/appointments.inc.php");
-
+require_once(__DIR__ . "/../../../interface/main/calendar/zoom_functions.php");
 use OpenEMR\Billing\EDI270;
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
@@ -988,12 +988,10 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
 	endif;
 	//for insured patient we need to set 2nd parameter as true
 	$getPatientBalance = get_patient_balance($pid);
+
+	//Enabling zoom video call
 	if($getPatientBalance == 0){
-		$getIntake = sqlQuery("select pc_catid from openemr_postcalendar_categories where pc_constant_id = ?", ['Intake-Evaluation']);
-        	$getMeetingUrl = sqlQuery("select meeting_link,pc_eventDate from openemr_postcalendar_events where pc_pid = ? and pc_catid = ? order by pc_eid desc limit 1", [$pid, $getIntake['pc_catid']]);
-		$meetingUrl = $getMeetingUrl['meeting_link'];
-		if(($getMeetingUrl['pc_eventDate'] == date('Y-m-d')) && $meetingUrl != '')
-	 	echo '<div style = "margin-bottom:10px"><a class = "btn btn-primary" href ="' . $meetingUrl . '" target = "_blank">Video</a></div>';
+		echo enableVideoButton('dashboard', $pid);
 	}
         $list_id = "dashboard"; // to indicate nav item is active, count and give correct id
         // Collect the patient menu then build it
