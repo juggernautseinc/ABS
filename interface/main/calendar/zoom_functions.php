@@ -137,17 +137,22 @@ function sendEmail($subject, $to, $body, $attachment=null){
 //Check patient or group having future appointments
 function enableVideoButton($callFrom = 'dashboard', $pid) {
 		$meetingUrl = '';
-		$getMeetingUrl = sqlQuery("select meeting_link, pc_startTime from openemr_postcalendar_events where pc_pid = ? and pc_eventDate >= now() and meeting_link IS NOT NULL and pc_startTime > now() order by pc_eid asc limit 1", [$pid]);
+		$getMeetingUrl = sqlQuery("select meeting_link, pc_startTime from openemr_postcalendar_events where pc_pid = ? and pc_eventDate >= ? and meeting_link IS NOT NULL and pc_startTime > now() order by pc_eid asc limit 1", [$pid, date('Y-m-d')]);
 
                 //whether patient in only one group
-                $checkForGroup = sqlQuery("select ope.meeting_link, ope.pc_startTime from therapy_groups_participants tg left join openemr_postcalendar_events ope on ope.pc_gid = tg.group_id where tg.pid = ? and ope.pc_eventDate >= now() and ope.meeting_link IS NOT NULL  and ope.pc_startTime > now() order by ope.pc_eid asc limit 1", [$pid]);
-		
-		if(!empty($getMeetingUrl) && $getMeetingUrl['meeting_link'] != ''){
-                        $meetingUrl = $getMeetingUrl['meeting_link'];
-                }
-                if(!empty($checkForGroup) && $checkForGroup['meeting_link'] != ''){
+                $checkForGroup = sqlQuery("select ope.meeting_link, ope.pc_startTime from therapy_groups_participants tg left join openemr_postcalendar_events ope on ope.pc_gid = tg.group_id where tg.pid = ? and ope.pc_eventDate >= ? and ope.meeting_link IS NOT NULL  and ope.pc_startTime > now() order by ope.pc_eid asc limit 1", [$pid, date('Y-m-d')]);
+		if(!empty($getMeetingUrl) && $getMeetingUrl['meeting_link'] != '' && !empty($checkForGroup) && $checkForGroup['meeting_link'] != ''){
+			//needs time compare - set earlistone in url
+			if(strtotime($getMeetingUrl['pc_startTime']) > strtotime($checkForGroup['pc_startTime']))
+				$meetingUrl = $checkForGroup['meeting_link'];
+			else
+                   	        $meetingUrl = $getMeetingUrl['meeting_link'];
+                }else if(!empty($checkForGroup) && $checkForGroup['meeting_link'] != ''){
                          $meetingUrl = $checkForGroup['meeting_link'];
+		}else if(!empty($getMeetingUrl) && $getMeetingUrl['meeting_link'] != ''){
+			$meetingUrl = $getMeetingUrl['meeting_link'];
 		}
+		// Send button or url based on call - either from dashboard or portal
 		if($callFrom == 'dashboard'){
 			$button = '';
 			if($meetingUrl != '')
@@ -156,11 +161,12 @@ function enableVideoButton($callFrom = 'dashboard', $pid) {
 		} else {
 			$data = [];
 			if($meetingUrl != ''){
-			$data['meetingUrl'] = $meetingUrl;
-			$data['patientBalanceStatus'] = true;	
+				$data['meetingUrl'] = $meetingUrl;
+				$data['patientBalanceStatus'] = true;	
 			}
 			return json_encode($data, true);
 		}
 }
+
 ?>
 
