@@ -199,10 +199,8 @@ function buildNav($newcnt, $pid, $result)
         }
     }
 
-    $videoData = enableVideoButton('portal', $pid);
+        $videoData = enableVideoButton('portal', $pid);
         $videoData = json_decode($videoData, true);
-        //$patientBalanceStatus = $videoData['patientBalanceStatus'] ?? false;
-	//$meetingUrl = ($videoData['meetingUrl'] == 'move_to_payment')? '#payment' : $videoData['meetingUrl'];
 
 	if($videoData['meetingUrl'] == 'move_to_payment') {
 	    $navItems[] = [
@@ -211,7 +209,7 @@ function buildNav($newcnt, $pid, $result)
                 'icon' => 'fas fa-video-camera',
                 'dataToggle' => 'collapse'
             ];	
-	}else {
+	}else if($videoData['meetingUrl'] != ''){
     	     $navItems[] = [
                     'url' => $videoData['meetingUrl'],
                     'label' => xl('Video'),
