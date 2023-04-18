@@ -55,17 +55,6 @@ $whereto = $_SESSION['whereto'] ?? null;
 $user = $_SESSION['sessionUser'] ?? 'portal user';
 $result = getPatientData($pid);
 
-//for insured patient we need to set 2nd parameter as true
-$getPatientBalance = get_patient_balance($pid);
-$patientBalanceStatus = false;
-$meetingUrl = '';
-//Enabling zoom video call
-if($getPatientBalance == 0){
-	$videoData = enableVideoButton('portal', $pid);
-	$videoData = json_decode($videoData, true);
-	$patientBalanceStatus = $videoData['patientBalanceStatus'] ?? false;
-	$meetingUrl = $videoData['meetingUrl'] ?? '';
-}
 $msgs = getPortalPatientNotes($_SESSION['portal_username']);
 $msgcnt = count($msgs);
 $newcnt = 0;
@@ -210,6 +199,28 @@ function buildNav($newcnt, $pid, $result)
         }
     }
 
+    $videoData = enableVideoButton('portal', $pid);
+        $videoData = json_decode($videoData, true);
+        //$patientBalanceStatus = $videoData['patientBalanceStatus'] ?? false;
+	//$meetingUrl = ($videoData['meetingUrl'] == 'move_to_payment')? '#payment' : $videoData['meetingUrl'];
+
+	if($videoData['meetingUrl'] == 'move_to_payment') {
+	    $navItems[] = [
+                'url' => '#paymentcard',
+                'label' => xl('Video'),
+                'icon' => 'fas fa-video-camera',
+                'dataToggle' => 'collapse'
+            ];	
+	}else {
+    	     $navItems[] = [
+                    'url' => $videoData['meetingUrl'],
+                    'label' => xl('Video'),
+                    'icon' => 'fas fa-video-camera',
+                    'target_blank' => 'true',
+                ];
+	}
+
+
     if ($GLOBALS['easipro_enable'] && !empty($GLOBALS['easipro_server']) && !empty($GLOBALS['easipro_name'])) {
         $navItems[] = [
             'url' => '#procard',
@@ -328,6 +339,4 @@ echo $twig->render('portal/home.html.twig', [
         'sectionRenderPost' => RenderEvent::EVENT_SECTION_RENDER_POST,
         'scriptsRenderPre' => RenderEvent::EVENT_SCRIPTS_RENDER_PRE
     ],
-    'patientBalanceStatus' => $patientBalanceStatus,
-    'meetingUrl' => $meetingUrl
 ]);
