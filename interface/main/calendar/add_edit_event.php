@@ -1163,7 +1163,9 @@ function set_category() {
     var s = f.form_category;
     if (s.selectedIndex >= 0) {
         var catid = s.options[s.selectedIndex].value;
-        f.form_title.value = s.options[s.selectedIndex].text;
+	f.form_title.value = s.options[s.selectedIndex].text;
+	var duration = parseInt(f.form_title.value.replace(/[^0-9.]/g, ""));
+        f.form_duration.value = (duration) ? duration : durations[catid];
         f.form_duration.value = durations[catid];
         set_display();
     }
